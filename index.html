@@ -150,6 +150,7 @@ p{max-width:62ch; margin:0 0 1.1em}
   opacity:.42; text-transform:uppercase; font-variation-settings:"wdth" 100,"wght" 600;
 }
 .lang button.on{opacity:1; color:var(--clay)}
+.nav.over-hero .lang button.on{color:var(--paper); border-bottom:1px solid var(--clay)}
 .lang span{opacity:.3}
 .nav .btn{padding:.75em 1.3em; font-size:.64rem}
 .nav .btn-nav{display:none}
@@ -177,11 +178,18 @@ p{max-width:62ch; margin:0 0 1.1em}
 
 /* ---------- hero ---------- */
 .hero{position:relative; min-height:100svh; display:flex; align-items:flex-end; color:var(--paper); background:var(--terre); overflow:hidden}
-.hero-media{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  filter:sepia(.18) saturate(1.04) contrast(1.04) brightness(.98)}
-.hero-grade{position:absolute; inset:0; background:var(--clay); mix-blend-mode:soft-light; opacity:.40; pointer-events:none}
-.hero-grade-2{position:absolute; inset:0; background:linear-gradient(200deg, rgba(62,46,34,.42), rgba(194,91,52,.14) 55%, rgba(62,46,34,.50)); mix-blend-mode:multiply; pointer-events:none}
-.hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(42,30,20,.55) 0%, rgba(42,30,20,.12) 40%, rgba(42,30,20,.78) 100%)}
+.hero picture{position:absolute; inset:0}
+.hero-media{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 45%;
+  filter:sepia(.05) saturate(1.02) contrast(1.02)}
+@media(max-width:900px){
+  .hero picture{inset:0 0 auto 0; width:100%; height:auto; aspect-ratio:.72; max-height:64%}
+  .hero-media{object-position:50% 42%}
+  .hero-scrim{background:linear-gradient(180deg, rgba(42,30,20,.30) 0%, rgba(42,30,20,.04) 22%, rgba(50,37,27,.42) 42%, var(--terre) 57%, var(--terre) 100%)}
+  .hero-grade, .hero-grade-2{height:64%}
+}
+.hero-grade{position:absolute; inset:0; background:var(--clay); mix-blend-mode:soft-light; opacity:.16; pointer-events:none}
+.hero-grade-2{position:absolute; inset:0; background:linear-gradient(200deg, rgba(62,46,34,.20), rgba(194,91,52,.06) 55%, rgba(62,46,34,.28)); mix-blend-mode:multiply; pointer-events:none}
+.hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(42,30,20,.42) 0%, rgba(42,30,20,.06) 32%, rgba(42,30,20,.58) 68%, rgba(30,21,14,.88) 100%)}
 .hero-in{position:relative; width:100%; max-width:var(--maxw); margin-inline:auto; padding:0 var(--gut) clamp(38px,7vh,84px)}
 .hero-foot{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:26px; margin-top:clamp(26px,5vh,52px)}
 
@@ -368,12 +376,15 @@ p{max-width:62ch; margin:0 0 1.1em}
      ================================================================ -->
 <div class="view on" id="v-accueil">
 
-  <!-- HERO — pour changer la vidéo, remplace simplement le fichier hero.mp4 (et hero-poster.jpg).
-       ATTENTION : hero.mp4 est actuellement la version d'aperçu iStock, filigranée. Elle ne peut pas rester en ligne. -->
+  <!-- BANNIÈRE — deux cadrages de la même image :
+       hero-desktop.jpg (large) et hero-mobile.jpg (vertical, recadré autour du coureur).
+       Le navigateur ne télécharge que celui dont il a besoin. Pour changer la bannière,
+       remplace ces deux fichiers en gardant les mêmes noms. -->
   <section class="hero">
-    <video class="hero-media" autoplay muted loop playsinline preload="metadata" poster="hero-poster.jpg">
-      <source src="hero.mp4" type="video/mp4">
-    </video>
+    <picture>
+      <source media="(max-width:900px)" srcset="hero-mobile.jpg">
+      <img class="hero-media" src="hero-desktop.jpg" alt="Un coureur seul sur une crête de montagne, au coucher du soleil" fetchpriority="high">
+    </picture>
     <div class="hero-grade"></div>
     <div class="hero-grade-2"></div>
     <div class="hero-scrim"></div>
